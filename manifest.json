@@ -29,6 +29,8 @@
   },
   "permissions": [
     "http://*/*",
-    "https://*/*"
+    "https://*/*",
+    "identity",
+    "tabs"
   ]
 }
