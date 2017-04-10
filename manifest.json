@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "API console extension",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "API console helper extension to help with the CORS requests.",
   "author": "Pawel Psztyc <pawel.psztyc@mulesoft.com>",
   "content_scripts": [
