@@ -18,7 +18,6 @@
   "background": {
     "persistent": false,
     "scripts": [
-      "js/payload-parser.js",
       "js/background.js"
     ]
   },
