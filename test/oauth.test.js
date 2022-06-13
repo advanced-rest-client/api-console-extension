@@ -31,7 +31,7 @@ const test = base.extend({
 });
 
 test.describe('app initialization', () => {
-  test.only('initializes the app through the content script', async ({ page }) => {
+  test('initializes the app through the content script', async ({ page }) => {
     // page.on('console', console.log)
     await page.goto('./index.html');
     const attr = await page.locator('#request').getAttribute('hidden');
