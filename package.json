@@ -1,19 +1,55 @@
 {
-  "name": "api-console-extension",
+  "name": "@advanced-rect-client/api-console-extension",
   "version": "0.1.0",
-  "description": "An extension to help API console to work with CORS",
+  "description": "API Console extension to proxy HTTP requests to the documented API.",
+  "type": "module",
+  "main": "index.js",
+  "module": "index.js",
+  "license": "CC-BY-2.0",
+  "author": {
+    "name": "Pawel Uchida-Psztyc",
+    "email": "pawel.psztyc@gmail.com"
+  },
+  "contributors": [
+    "Your name can be here!"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/advanced-rect-client/api-console-extension.git"
+  },
+  "bugs": {
+    "url": "https://github.com/advanced-rect-client/api-console-extension/issues",
+    "email": "arc@mulesoft.com"
+  },
   "scripts": {
-    "build": "gulp",
-    "test": "mocha 'test/*.test.js' --reporter spec"
+    "start": "wds open \"/demo/\"",
+    "lint:eslint": "eslint --ext .js,.html . --ignore-path .gitignore",
+    "format:eslint": "eslint --ext .js,.html . --fix --ignore-path .gitignore",
+    "lint": "npm run lint:eslint",
+    "format": "npm run format:eslint",
+    "test": "npx playwright test",
+    "prepare": "npx playwright install chromium && husky install"
   },
   "devDependencies": {
-    "gulp": "gulpjs/gulp#4.0",
-    "archiver": "^1.3.0",
-    "chai": "^3.5.0",
-    "mocha": "^3.2.0"
+    "@commitlint/cli": "^17.0.0",
+    "@commitlint/config-conventional": "^17.0.0",
+    "@playwright/test": "^1.22.2",
+    "@types/chrome": "^0.0.190",
+    "@web/dev-server": "^0.1.31",
+    "eslint": "^8.13.0",
+    "eslint-config-prettier": "^8.5.0",
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.1",
+    "typescript": "^4.6.3"
   },
-  "engines": {
-    "node": ">=4.0"
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   },
-  "private": true
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix"
+    ]
+  }
 }

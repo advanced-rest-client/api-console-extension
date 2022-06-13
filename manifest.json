@@ -1,8 +1,8 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "API console extension",
-  "version": "0.0.8",
-  "description": "API console helper extension to help with the CORS requests.",
+  "version": "0.1.0",
+  "description": "API Console extension to proxy HTTP requests to the documented API.",
   "author": "Pawel Psztyc <pawel.psztyc@mulesoft.com>",
   "content_scripts": [
     {
@@ -10,17 +10,14 @@
         "<all_urls>"
       ],
       "js": [
-        "js/content-script.js"
+        "src/page-proxy.js"
       ],
       "run_at": "document_start"
     }
   ],
   "background": {
-    "persistent": false,
-    "scripts": [
-      "js/payload-parser.js",
-      "js/background.js"
-    ]
+    "service_worker": "src/service.js",
+    "type": "module"
   },
   "icons": {
     "16": "assets/icon-16x16.png",
@@ -28,9 +25,10 @@
     "128": "assets/icon-128x128.png"
   },
   "permissions": [
-    "http://*/*",
-    "https://*/*",
-    "identity",
     "tabs"
+  ],
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*"
   ]
 }

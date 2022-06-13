@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <title>API Console Extension</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+  <link href="./demo.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+  <header>API Console Extension</header>
+  <nav>
+    
+  </nav>
+  <main>
+    <h1>Introduction</h1>
+    <p>Lo start the demo follow the following steps:</p>
+    <ol>
+      <li>Open the <code>chrome://extensions/</code> page</li>
+      <li>Make sure the "Developer mode" toggle option is turned on.</li>
+      <li>Click on the "Load unpacked" button and point to the directory with this repository.</li>
+      <li>Refresh the page.</li>
+    </ol>
+
+    <div class="current-status missing" id="status">
+      The extension was not detected.
+    </div>
+
+    <form id="request" hidden class="test-form">
+      <fieldset>
+        <legend>Proxy an HTTP request</legend>
+        <div class="input-row">
+          <label for="url">URL</label>
+          <input type="url" id="url" name="url" required>
+        </div>
+        <div class="input-row">
+          <label for="method">Method</label>
+          <input type="text" id="method" name="method" list="methodList" required>
+          <datalist id="methodList">
+            <option value="GET">
+            <option value="POST">
+            <option value="PUT">
+            <option value="DELETE">
+          </datalist>
+        </div>
+        <div class="input-row">
+          <label for="headers">Headers (optional)</label>
+          <textarea id="headers" name="headers"></textarea>
+        </div>
+        <div class="input-row">
+          <label for="body">Body (optional)</label>
+          <textarea id="body" name="payload"></textarea>
+        </div>
+        <div class="input-row">
+          <button type="submit" id="requestSubmit">Proxy!</button>
+        </div>
+      </fieldset>
+    </form>
+
+    <output id="requestResult" hidden></output>
+  </main>
+  <footer>Credits: Pawel Uchida-Psztyc</footer>
+  <script type="module" src="index.js"></script>
+</body>
+</html>
