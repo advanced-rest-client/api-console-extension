@@ -1,5 +1,5 @@
 {
-  "name": "@advanced-rect-client/api-console-extension",
+  "name": "@advanced-rest-client/api-console-extension",
   "version": "0.1.0",
   "description": "API Console extension to proxy HTTP requests to the documented API.",
   "type": "module",
@@ -15,10 +15,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/advanced-rect-client/api-console-extension.git"
+    "url": "git://github.com/advanced-rest-client/api-console-extension.git"
   },
   "bugs": {
-    "url": "https://github.com/advanced-rect-client/api-console-extension/issues",
+    "url": "https://github.com/advanced-rest-client/api-console-extension/issues",
     "email": "arc@mulesoft.com"
   },
   "scripts": {
