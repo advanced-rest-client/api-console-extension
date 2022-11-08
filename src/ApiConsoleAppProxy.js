@@ -234,6 +234,7 @@ export class ApiConsoleAppProxy extends EventTarget {
           detail: {
             message: "No response has been recorded.",
             code: "no_response",
+            error: true,
           },
         })
       );
@@ -241,12 +242,9 @@ export class ApiConsoleAppProxy extends EventTarget {
     }
     const typedError = /** @type IApiConsoleProxyError */ (data);
     if (typedError.error) {
-      const message =
-        typeof typedError.message === "string"
-          ? typedError.message
-          : "No response has been recorded.";
-      const code =
-        typeof typedError.code === "string" ? typedError.code : "unknown_error";
+      const message = typeof typedError.message === "string" ? typedError.message : "No response has been recorded.";
+      const code = typeof typedError.code === "string" ? typedError.code : "unknown_error";
+      const state = typeof typedError.state === "string" ? typedError.state : undefined;
       this.eventTarget.dispatchEvent(
         new CustomEvent("oauth2-error", {
           bubbles: true,
@@ -254,31 +252,22 @@ export class ApiConsoleAppProxy extends EventTarget {
           detail: {
             message,
             code,
+            state,
+            error: true,
           },
         })
       );
       return;
     }
     const typedToken = /** @type ITokenInfo */ (data);
-    const state =
-      typeof typedToken.state === "string" ? typedToken.state : undefined;
-    const accessToken =
-      typedToken.accessToken && typeof typedToken.accessToken === "string"
-        ? typedToken.accessToken
-        : undefined;
-    const tokenType =
-      typedToken.tokenType && typeof typedToken.tokenType === "string"
-        ? typedToken.tokenType
-        : undefined;
-    const expiresIn =
-      typedToken.expiresIn &&
-      (typeof typedToken.expiresIn === "number" ||
-        typeof typedToken.expiresIn === "string")
-        ? Number(typedToken.expiresIn)
-        : undefined;
-    const scope = Array.isArray(typedToken.scope)
-      ? typedToken.scope
-      : undefined;
+    const state = typeof typedToken.state === "string" ? typedToken.state : undefined;
+    const accessToken = typedToken.accessToken && typeof typedToken.accessToken === "string" ? typedToken.accessToken : undefined;
+    const refreshToken = typedToken.refreshToken && typeof typedToken.refreshToken === "string" ? typedToken.refreshToken : undefined;
+    const tokenType = typedToken.tokenType && typeof typedToken.tokenType === "string" ? typedToken.tokenType : undefined;
+    const expiresIn = typedToken.expiresIn && (typeof typedToken.expiresIn === "number" || typeof typedToken.expiresIn === "string") ? Number(typedToken.expiresIn): undefined;
+    const expiresAt = typedToken.expiresAt && (typeof typedToken.expiresAt === "number" || typeof typedToken.expiresAt === "string") ? Number(typedToken.expiresAt): undefined;
+    const expiresAssumed = typeof typedToken.expiresAssumed === "boolean" ? typedToken.expiresAssumed : undefined;
+    const scope = Array.isArray(typedToken.scope) ? typedToken.scope : undefined;
     this.eventTarget.dispatchEvent(
       new CustomEvent("oauth2-token-response", {
         bubbles: true,
@@ -289,6 +278,9 @@ export class ApiConsoleAppProxy extends EventTarget {
           tokenType,
           expiresIn,
           scope,
+          refreshToken,
+          expiresAt,
+          expiresAssumed,
         },
       })
     );

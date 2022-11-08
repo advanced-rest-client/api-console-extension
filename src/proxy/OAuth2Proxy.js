@@ -250,6 +250,7 @@ export class OAuth2Proxy {
         id: id,
         tab: tab
       };
+      this._addTabHandlers();
     } catch (e) {
       throw new AuthorizationError(
         e.message,
@@ -343,7 +344,7 @@ export class OAuth2Proxy {
     /** @type string */
     let raw;
     try {
-      const raw = this._authDataFromUrl(url);
+      raw = this._authDataFromUrl(url);
       if (!raw) {
         throw new Error('');
       }
@@ -437,6 +438,7 @@ export class OAuth2Proxy {
       let tokenInfo;
       try {
         tokenInfo = await this.exchangeCode(code);
+        tokenInfo.state = state;
       } catch (e) {
         this._handleTokenCodeError(/** @type Error */(e));
         return;

@@ -1,4 +1,5 @@
 /** @typedef {import('../../src/types').ISafePayload} ISafePayload */
+/** @typedef {import('../../src/types').IOAuth2Authorization} IOAuth2Authorization */
 
 export class ProxyRequest {
   /**
@@ -70,6 +71,36 @@ export class ProxyRequest {
         window.addEventListener('api-response', handler);
       });
     }, [url, method, headers, payload]);
+    return result;
+  }
+
+  /**
+   * Dispatches the event for the proxy to handle OAuth 2 authorization.
+   * @param {IOAuth2Authorization} config 
+   */
+  async proxyOauth2(config) {
+    const result = await this.page.evaluate(([detail]) => {
+      const e = new CustomEvent('oauth2-token-requested', {
+        bubbles: true,
+        cancelable: true,
+        detail,
+      });
+      document.body.dispatchEvent(e);
+      return new Promise((resolve) => {
+        const handlerSuccess = (e) => {
+          resolve(e.detail);
+          window.removeEventListener('oauth2-token-response', handlerSuccess);
+          window.removeEventListener('oauth2-error', handlerError);
+        };
+        const handlerError = (e) => {
+          resolve(e.detail);
+          window.removeEventListener('oauth2-token-response', handlerSuccess);
+          window.removeEventListener('oauth2-error', handlerError);
+        };
+        window.addEventListener('oauth2-token-response', handlerSuccess);
+        window.addEventListener('oauth2-error', handlerError);
+      });
+    }, [config]);
     return result;
   }
 

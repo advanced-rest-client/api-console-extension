@@ -59,7 +59,7 @@ export function sanityCheck(settings) {
  */
 export function randomString() {
   const array = new Uint32Array(28);
-  window.crypto.getRandomValues(array);
+  globalThis.crypto.getRandomValues(array);
   return Array.from(array, (dec) => `0${dec.toString(16)}`.substr(-2)).join("");
 }
 
@@ -93,7 +93,7 @@ export function camel(name) {
 export async function sha256(value) {
   const encoder = new TextEncoder();
   const data = encoder.encode(value);
-  return window.crypto.subtle.digest("SHA-256", data);
+  return globalThis.crypto.subtle.digest("SHA-256", data);
 }
 
 /**
@@ -126,7 +126,7 @@ export async function generateCodeChallenge(verifier) {
 export function nonceGenerator(size = 20) {
   const validChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   let array = new Uint8Array(size);
-  window.crypto.getRandomValues(array);
+  globalThis.crypto.getRandomValues(array);
   array = array.map(x => validChars.charCodeAt(x % validChars.length));
   return String.fromCharCode.apply(null, array);
 }

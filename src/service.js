@@ -51,8 +51,9 @@ class ApiConsoleService {
     } catch (e) {
       this.sendResponse({
         'message': e.message || 'The request is invalid.',
-        'code': 'invalid_request',
-        'error': true
+        'code': e.code || 'invalid_request',
+        'error': true,
+        'state': e.state,
       });
     }
   }

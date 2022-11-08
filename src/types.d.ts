@@ -108,6 +108,7 @@ export interface IApiConsoleProxyError {
   error: true;
   code?: string;
   message: string;
+  state?: string;
 }
 
 export interface IApiConsoleHttpResponseStats {

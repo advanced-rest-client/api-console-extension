@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "API console extension",
-  "version": "0.1.0",
+  "version": "0.1.3",
   "description": "API Console extension to proxy HTTP requests to the documented API.",
   "author": "Pawel Psztyc <pawel.psztyc@mulesoft.com>",
   "content_scripts": [
