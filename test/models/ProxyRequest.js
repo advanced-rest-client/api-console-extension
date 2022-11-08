@@ -40,12 +40,15 @@ export class ProxyRequest {
    */
   async proxyEvent(url, method='GET', headers, payload) {
     const result = await this.page.evaluate(([url, method, headers, payload]) => {
-      /** @type string | ISafePayload | FormData | undefined */
+      /** @type string | ISafePayload | FormData | File | undefined */
       let finalPayload = payload;
       if (finalPayload === 'FormData') {
         finalPayload = new FormData();
         finalPayload.set('txt-field', 'text field value');
         finalPayload.set('file-field', new File(['file value'], 'file.txt', { type: 'text/plain' }));
+      } else if (finalPayload === 'File') {
+        const contents = new Blob(['test file contents'], { type: 'text/plain' });
+        finalPayload = new File([contents], 'contents.txt');
       }
       const e = new CustomEvent('api-request', {
         bubbles: true,

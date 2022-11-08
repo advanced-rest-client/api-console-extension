@@ -32,11 +32,9 @@ const test = base.extend({
 
 test.describe('app initialization', () => {
   test('initializes the app through the content script', async ({ page }) => {
-    // page.on('console', console.log)
     await page.goto('./index.html');
     const attr = await page.locator('#request').getAttribute('hidden');
     expect(attr).toBeNull();
-    console.log(page.context().serviceWorkers());
   });
 });
 
@@ -123,6 +121,32 @@ test.describe('HTTP Proxy', () => {
     expect(headers.get('content-type')).toContain('multipart/form-data');
     expect(body.files).toHaveProperty('file-field', 'file value');
     expect(body.form).toHaveProperty('txt-field', 'text field value');
+  });
+
+  test('proxies a File request', async () => {
+    const response = /** @type IApiConsoleHttpResponse */ (await proxy.proxyEvent('https://httpbin.org/post', 'POST', 'x-test: test-value\ncontent-type: text/plain', 'File'));
+    expect(response).toHaveProperty('responseData');
+    expect(response).toHaveProperty('stats');
+    expect(response).toHaveProperty('id');
+    expect(response).toHaveProperty('request');
+    const { stats, request } = response;
+    const data = /** @type IApiConsoleHttpResponseData */ (response.responseData);
+    expect(data).toHaveProperty('response');
+    expect(data).toHaveProperty('responseText');
+    expect(data).toHaveProperty('responseType', 'text');
+    expect(data).toHaveProperty('responseURL', 'https://httpbin.org/post');
+    expect(data).toHaveProperty('status', 200);
+    expect(data).toHaveProperty('statusText');
+    expect(data).toHaveProperty('headers');
+    expect(stats).toHaveProperty('loadingTime');
+    expect(stats).toHaveProperty('startTime');
+    expect(request).toHaveProperty('id', response.id);
+    expect(request).toHaveProperty('url', 'https://httpbin.org/post');
+    const body = JSON.parse(data.response);
+    const headers = new Headers(body.headers)
+    expect(headers.get('x-test')).toEqual('test-value');
+    expect(headers.get('content-type')).toContain('text/plain');
+    expect(body.data).toEqual('test file contents');
   });
 });
 

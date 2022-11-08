@@ -1,6 +1,6 @@
 {
   "name": "@advanced-rest-client/api-console-extension",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "API Console extension to proxy HTTP requests to the documented API.",
   "type": "module",
   "main": "index.js",
@@ -34,7 +34,7 @@
     "@commitlint/cli": "^17.0.0",
     "@commitlint/config-conventional": "^17.0.0",
     "@playwright/test": "^1.22.2",
-    "@types/chrome": "^0.0.190",
+    "@types/chrome": "^0.0.200",
     "@web/dev-server": "^0.1.31",
     "eslint": "^8.13.0",
     "eslint-config-prettier": "^8.5.0",

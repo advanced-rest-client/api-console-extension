@@ -24,9 +24,6 @@
     "48": "assets/icon-48x48.png",
     "128": "assets/icon-128x128.png"
   },
-  "permissions": [
-    "tabs"
-  ],
   "host_permissions": [
     "http://*/*",
     "https://*/*"
